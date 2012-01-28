@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ThreeCardMonte/ThreeCardMonte.cs">
+    <Files>
+      <File FileName="ThreeCardMonte/MenuController.cs" Line="34" Column="4" />
+      <File FileName="ThreeCardMonte/ThreeCardMonte.cs" Line="418" Column="6" />
+      <File FileName="ThreeCardMonte/GameController.cs" Line="14" Column="28" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

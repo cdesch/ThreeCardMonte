@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{109CE836-2380-425D-A72B-FE11573BCBF3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ThreeCardMonte</RootNamespace>
+    <AssemblyName>ThreeCardMonte</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ThreeCardMonte.cs" />
+    <Compile Include="Bootstrap.cs" />
+    <Compile Include="GameController.cs" />
+    <Compile Include="TitleController.cs" />
+    <Compile Include="MenuController.cs" />
+    <Compile Include="GameEndController.cs" />
+    <Compile Include="GameShuffleController.cs" />
+    <Compile Include="GameBeginController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Sifteo">
+      <HintPath>..\..\Sifteo_SDK_mac_1_1_2\Siftdev.app\Contents\Resources\Runtimes\Mono\Current\sifteo\Sifteo.dll</HintPath>
+    </Reference>
+    <Reference Include="Sifteo, Version=0.1.4240.25449, Culture=neutral, PublicKeyToken=0e958af9dbfb2cb7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\experimental\Sifteo.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\Ninject-2.2.1.0-release-mono-2.0\Ninject.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
