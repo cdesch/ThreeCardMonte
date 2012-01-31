@@ -41,6 +41,8 @@
     <Compile Include="GameEndController.cs" />
     <Compile Include="GameShuffleController.cs" />
     <Compile Include="GameBeginController.cs" />
+    <Compile Include="MenuCube.cs" />
+    <Compile Include="GameCube.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Sifteo">

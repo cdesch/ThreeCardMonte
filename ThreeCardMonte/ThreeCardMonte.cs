@@ -15,11 +15,14 @@ namespace ThreeCardMonte
 {
 	public class ThreeCardMonte : BaseApp
 	{
+		private bool debuggingMode = true;
 		public List<CubeWrapper> mWrappers = new List<CubeWrapper> (0);
 		private bool mNeedCheck;
 		private Sound mMusic;
 		private int lastIndex;
+		public Cube selectedCube = null;
 		public StateMachine sm;
+		
 		
 		//State MachineControllers
 		TitleController titleController;
@@ -39,13 +42,14 @@ namespace ThreeCardMonte
 		public static readonly string GameEnd = "GameEnd";
 		
 		
-		//Transition
-		public static readonly string TitleToMenu = "TitleToMenu";
-		public static readonly string MenuToGameBegin = "MenuToGameBegin";
-		public static readonly string BeginGameToMenu = "BeginGameToMenu";
-		public static readonly string BeginGameToGameShuffle = "BeginGameToGameShuffle";
-		public static readonly string GameShuffleToGameEnd = "GameShuffleToGameEnd";
-		public static readonly string GameEndToMenu = "GameEndToMenu";
+		//Transition // Prefix with 't'
+		public static readonly string tTitleToMenu = "TitleToMenu";
+		public static readonly string tMenuToGameBegin = "MenuToGameBegin";
+		public static readonly string tGameBeginToMenu = "GameBeginToMenu";
+		public static readonly string tGameBeginToGameShuffle = "GameBeginToGameShuffle";
+		public static readonly string tGameShuffleToGameEnd = "GameShuffleToGameEnd";
+		public static readonly string tGameEndToMenu = "GameEndToMenu";
+		//public static readonly string GameBeginToMenu = "GameBeginToMenu";
 		
 		//FrameRate
 		override public int FrameRate {
@@ -62,16 +66,18 @@ namespace ThreeCardMonte
 			System.Version myVersion = System.Reflection.Assembly.GetExecutingAssembly ().GetName ().Version;		
 			Log.Debug (myVersion.ToString ());
 			
-			
 			//Init the State Machine
 			sm = new StateMachine ();
 			
 			//Init the Controllers
 			titleController = new TitleController ();
 			menuController = new MenuController ();
+			menuController.cubes = CubeSet;
 			gameController = new GameController ();
 			gameBeginController = new GameBeginController ();
+			gameBeginController.cubes = CubeSet;
 			gameShuffleController = new GameShuffleController ();
+			
 			gameEndController = new GameEndController ();
 			
 			sm.State ("Title", titleController);
@@ -82,25 +88,25 @@ namespace ThreeCardMonte
 			sm.State ("GameEnd", gameEndController);
 	
 			sm.Transition ("Title", "TitleToMenu", "Menu");
-			sm.Transition ("Menu", "MenuToGameBegin", "BeginGame");
-			sm.Transition ("BeginGame", "BeginGameToMenu", "Menu");  
-			sm.Transition ("BeginGame", "BeginGameToGameShuffle", "GameShuffle");
-			sm.Transition ("GameShuffle", "GameShuffleToGameEnd", "GameEnd");
-			sm.Transition ("GameEnd", "GameEndToMenu", "Menu");
+			sm.Transition ("Menu", tMenuToGameBegin, "GameBegin");
+			sm.Transition ("GameBegin", tGameBeginToMenu, "Menu");  
+			sm.Transition ("GameBegin", tGameBeginToGameShuffle, "GameShuffle");
+			sm.Transition ("GameShuffle", tGameShuffleToGameEnd, "GameEnd");
+			sm.Transition ("GameEnd", tGameEndToMenu, "Menu");
 			
-			sm.SetState ("Title", "TitleToMenu");
+			//sm.SetState ("Title", "TitleToMenu");
+			sm.SetState ("Menu", "MenuToGameBegin");
 			
 			// Loop through all the cubes and set them up.
 			lastIndex = 1;
+			
+			
 			foreach (Cube cube in CubeSet) {
 				
 				CubeWrapper wrapper = new CubeWrapper (this, cube, lastIndex);
-				//wrapper.mCubeStateMachine = mStateMachine;
-				//wrapper.mCubeStateController = myController;
 				lastIndex += 1;
 				mWrappers.Add (wrapper);
 			}
-
 			this.PauseEvent += OnPause;
 			this.UnpauseEvent += OnUnpause;
 			CubeSet.NewCubeEvent += OnNewCube;
@@ -215,18 +221,24 @@ namespace ThreeCardMonte
 				CheckSound (t);
 				
 			}
+			
+			//Tick the current state
+			sm.CurrentState.OnTick (1);
+			
 
 			foreach (CubeWrapper wrapper in mWrappers) {
+				
+			
 				wrapper.Tick ();
 				
-				if (wrapper.mCubeSelected) {
+				
+				//if the cube is selected but is not the currently selected cube, then turn it off. 
+				if (wrapper.mCubeSelected && wrapper.mCube != selectedCube) {
 					
-					//For State Controller Imeplmentation
-					//check if the a cube was previous selected 
-					
-					//Deselect the previous cube and select the curent one
-					
-				}
+					//set to false and redraw the cube to remove the marker.
+					wrapper.mCubeSelected = false;
+					wrapper.mNeedDraw = true;
+				}				
       
 			}
 			
@@ -252,29 +264,30 @@ namespace ThreeCardMonte
 			if (row.Length == totalCubes) {
 				found = true;
 				int lastId = -1;
+				/*
 				foreach (Cube cube in row) {
 					CubeWrapper wrapper = (CubeWrapper)cube.userData;
 					if (wrapper.mIndex < lastId)
 						found = false;
 					lastId = wrapper.mIndex;
-				}
+				}*/
 				
 				//Is Cube Selected
+				//Determine state Transitions for the next State
 				
-				//Next State
-				if (sm.CurrentState == menuController) {
-					sm.CurrentState.OnDispose ();
-					sm.CurrentState.OnSetup (MenuToGameBegin);
-				}
 				
-				if (sm.CurrentState == gameBeginController) {
-					
-					//is there a selected cube
-				}
+				//Queue the transition
+				stateTransition (true);
+				//Apply the transition
+				sm.Tick (1);
 				
 			} else {
 				//Cubes are not in row
 				
+				//Queue the transition
+				stateTransition (false);
+				//Apply the transition
+				sm.Tick (1);
 			}
 			
 			
@@ -351,6 +364,49 @@ namespace ThreeCardMonte
 			}
 		}
 		
+		public void stateTransition (bool inRow)
+		{
+			
+			//Start Conditions
+			//End Conditions
+			
+			Log.Debug ("Start Transition");
+			
+			if (sm.CurrentState == menuController) {
+				
+				if (inRow) {
+					//Begin the game
+					sm.QueueTransition (tMenuToGameBegin);
+				}
+				
+				Log.Debug (tMenuToGameBegin);
+				
+				
+			} else if (sm.CurrentState == gameBeginController) {
+				//GameBeginController
+				
+				//Are the cubes in a row?
+				if (inRow) {
+					
+					//is a cube selected?
+					if (selectedCube != null) {
+						//Transition to shuffle state
+					}
+					
+				} else {
+					//Go back to menu
+					sm.QueueTransition (tGameBeginToMenu);		
+				}
+				
+			} else {
+				
+				//Handle unknown state
+				Log.Debug ("Exception");
+					
+			}
+			
+		}
+		
 		public void StartState ()
 		{
 			Log.Debug ("StartingState");
@@ -382,7 +438,8 @@ namespace ThreeCardMonte
 		public StateMachine mCubeStateMachine;
 
 		// This flag tells the wrapper to redraw the current image on the cube. (See Tick, below).
-		public bool mCubeSelected = false;
+		public bool mCubeSelected = false; //Was selected by the user on this tick
+		public bool mIsSelected = false; //Is noted as the selected cube
 		public bool mNeedDraw = true;
 
 		public CubeWrapper (ThreeCardMonte app, Cube cube, int seq)
@@ -405,6 +462,7 @@ namespace ThreeCardMonte
 		//Handle Button Event
 		void HandleCubeButtonEvent (Cube c, bool pressed)
 		{
+			
 			//Check if the button was pressed
 			if (pressed) {
 				
@@ -413,6 +471,7 @@ namespace ThreeCardMonte
 					mCubeSelected = false;
 				} else {
 					mCubeSelected = true;
+					mApp.selectedCube = mCube;
 					
 					//mCubeStateMachine.Transition()
 					//Check if a neighboor cube is selected
@@ -422,6 +481,7 @@ namespace ThreeCardMonte
 				mNeedDraw = true;
 
 			}
+			
 		}
 
 		private void OnTilt (Cube cube, int tiltX, int tiltY, int tiltZ)
@@ -485,14 +545,16 @@ namespace ThreeCardMonte
 		// This method is called every frame by the Tick in SorterApp. (see above.)
 		public void Tick ()
 		{
+			
 			// If anyone has raised the mNeedDraw flag, redraw the image on the cube.
 			if (mNeedDraw) {
 				Log.Debug ("mNeedDraw {0}", this.mCube.UniqueId);
 				mNeedDraw = false;
-		
+						
 				Paint ();
-      
 			}
+
+
 		}
 
 		public void Paint ()
@@ -507,8 +569,13 @@ namespace ThreeCardMonte
 				
 				//Draw the selection icon if the cube has been selected
 				if (mCubeSelected) {
+					//if (mApp.selectedCube == this) {
 					mCube.FillRect (mSelectColor, 25, 25, 30, 30);	
 				}
+				
+				
+				
+				
 				
 				// ### Image rotation ###
 				//
