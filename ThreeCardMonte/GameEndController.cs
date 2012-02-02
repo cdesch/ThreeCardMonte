@@ -15,7 +15,7 @@ namespace ThreeCardMonte
 		String classname = "GameEndController";
 		public CubeSet cubes;
 		private Color cubeBackground = new Color (0, 255, 255); //Purple
-		
+		private Color mSelectColor = new Color (255, 0, 0); //Red
 		ThreeCardMonte mApp;
 
 		public GameEndController (ThreeCardMonte app, CubeSet cubeSet)
