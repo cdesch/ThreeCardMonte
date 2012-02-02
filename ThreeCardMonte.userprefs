@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ThreeCardMonte/MenuController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ThreeCardMonte/ShuffleCube.cs">
     <Files>
-      <File FileName="ThreeCardMonte/MenuController.cs" Line="11" Column="22" />
-      <File FileName="ThreeCardMonte/ThreeCardMonte.cs" Line="231" Column="5" />
-      <File FileName="ThreeCardMonte/GameController.cs" Line="25" Column="39" />
-      <File FileName="ThreeCardMonte/GameEndController.cs" Line="29" Column="4" />
-      <File FileName="ThreeCardMonte/GameShuffleController.cs" Line="4" Column="63" />
-      <File FileName="ThreeCardMonte/GameBeginController.cs" Line="21" Column="3" />
+      <File FileName="ThreeCardMonte/GameBeginController.cs" Line="1" Column="1" />
+      <File FileName="ThreeCardMonte/GameCube.cs" Line="79" Column="20" />
+      <File FileName="ThreeCardMonte/ThreeCardMonte.cs" Line="212" Column="31" />
+      <File FileName="ThreeCardMonte/MenuController.cs" Line="148" Column="4" />
+      <File FileName="ThreeCardMonte/GameShuffleController.cs" Line="147" Column="5" />
+      <File FileName="ThreeCardMonte/MenuCube.cs" Line="149" Column="32" />
+      <File FileName="ThreeCardMonte/ShuffleCube.cs" Line="17" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

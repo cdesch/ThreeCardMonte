@@ -49,7 +49,7 @@ namespace ThreeCardMonte
 		
 		public void OnTick (float dt)
 		{
-			Log.Debug (classname + " OnTick");
+			//Log.Debug (classname + " OnTick");
 			
 			// Here we see if anyone raised the flag for a neighbor check; if so, we
 			// do the check and play the appropriate sound depending on the result.

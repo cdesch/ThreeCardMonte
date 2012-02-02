@@ -25,13 +25,12 @@ namespace ThreeCardMonte
 		
 		
 		//State MachineControllers
-		TitleController titleController;
-		MenuController menuController;
-		GameController gameController;
-		GameShuffleController gameShuffleController;
-		GameBeginController gameBeginController;
-		GameEndController gameEndController;
-		
+		private TitleController titleController;
+		private MenuController menuController;
+		private GameController gameController;
+		private GameShuffleController gameShuffleController;
+		private GameBeginController gameBeginController;
+		private GameEndController gameEndController;	
 		
 		//States
 		public static readonly string LAUNCH = "STARTUP";
