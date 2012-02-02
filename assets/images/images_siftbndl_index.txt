@@ -1,1 +1,2 @@
 buddy
+xterm610

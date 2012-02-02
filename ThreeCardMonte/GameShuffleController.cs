@@ -18,12 +18,16 @@ namespace ThreeCardMonte
 		private bool mNeedCheck;
 		private int lastIndex;
 		public CubeSet cubes;
-		private Color cubeBackground = new Color (0, 255, 255); //Yellow
+		private Color cubeBackground = new Color (0, 0, 0); //Black
 		
+		
+		ThreeCardMonte mApp;
 		//Init
-		public GameShuffleController ()
+		public GameShuffleController (ThreeCardMonte app, CubeSet cubeSet)
 		{
 			Log.Debug (classname + " Init");
+			mApp = app;
+			cubes = cubeSet;
 		}
 			
 		//Setup
@@ -31,6 +35,8 @@ namespace ThreeCardMonte
 		{
 			
 			Log.Debug (classname + " OnSetup");
+			
+			/*
 			mNeedCheck = true;
 			
 			// Loop through all the cubes and set them up.
@@ -40,13 +46,16 @@ namespace ThreeCardMonte
 				ShuffleCube wrapper = new ShuffleCube (this, cube, lastIndex);
 				lastIndex += 1;
 				mWrappers.Add (wrapper);
-			}
+			}*/
 		}
 		
 		public void OnTick (float dt)
 		{
 			//Log.Debug (classname + " OnTick");
 			
+			
+			//OnPaint (true);
+			/*
 			// Here we see if anyone raised the flag for a neighbor check; if so, we
 			// do the check and play the appropriate sound depending on the result.
 			if (mNeedCheck) {
@@ -67,7 +76,7 @@ namespace ThreeCardMonte
 					//Deselect the previous cube and select the curent one
 				}
 			}
-			
+			*/
 		}
 		
 		private bool CheckNeighbors ()
@@ -127,7 +136,7 @@ namespace ThreeCardMonte
 				found = true;
 				int lastId = -1;
 				foreach (Cube cube in column) {
-					MenuCube wrapper = (MenuCube)cube.userData;
+					ShuffleCube wrapper = (ShuffleCube)cube.userData;
 					if (wrapper.mIndex < lastId)
 						found = false;
 					lastId = wrapper.mIndex;
@@ -136,7 +145,7 @@ namespace ThreeCardMonte
 
 			// Here we go through each wrapper and update its state depending on the
 			// results of our search.
-			foreach (MenuCube wrapper in mWrappers) {
+			foreach (ShuffleCube wrapper in mWrappers) {
 				wrapper.CheckNeighbors (found);
 			}
 
@@ -146,23 +155,60 @@ namespace ThreeCardMonte
 		
 		public void OnPaint (bool canvasDirty)
 		{
-			if (canvasDirty) {
+			//Check the cube set
+			if (cubes != null) {
+				//Make sure the canvase needs to be redrawn
+				if (canvasDirty) {
 				
-				foreach (Cube cube in cubes) {
-					//Paint the cube
-					mCube.FillScreen (cubeBackground);
-					cube.Paint ();
+					//Cycle through all the cubes
+					foreach (Cube cube in cubes) {
+						
+						//Paint the cube
+						if (cube != null) {
+							cube.FillScreen (cubeBackground);
+							//DrawString (cube, 20, 10, "SHUFFFLE!");
+							cube.Paint ();	
+						} else {
+							//Handle this exception
+						}
+					}
+				
+				} else {
+					//Skip paint
+					//return
 				}
-				
 			} else {
-				//Skip paint
-				//return
+				//Handle this exception
 			}
 		}
 		
 		public void OnDispose ()
 		{
 			Log.Debug (classname + " OnDispose");
+		}
+		
+		public static void DrawString (Cube c, int x, int y, String s)
+		{
+			int cur_x = x, cur_y = y;
+
+			for (int i = 0; i < s.Length; ++i) {
+				char ascii = s [i];
+
+				// newlines
+				if (s [i] == '\n') {
+					cur_y += 10;
+					cur_x = x;
+				} else if (s [i] == ' ') {
+					// blit the appropriate character
+					cur_x += 6;	
+				} else {
+					// blit the appropriate character
+					// note that for this example, the image is called "xterm610";
+					// if you want multiple fonts, you may want to pass in the image name as a parameter to this function
+					c.Image ("xterm610", cur_x, cur_y, (ascii % 16) * 6, (ascii / 16) * 10, 6, 10, 1, 0);
+					cur_x += 6;
+				}
+			}
 		}
 	}
 }
