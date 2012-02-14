@@ -45,6 +45,7 @@
     <Compile Include="GameCube.cs" />
     <Compile Include="ShuffleCube.cs" />
     <Compile Include="Drawing.cs" />
+    <Compile Include="Constants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Sifteo">
