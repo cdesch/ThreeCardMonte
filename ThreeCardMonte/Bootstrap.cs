@@ -1,23 +1,42 @@
-// When debugging, it can sometimes be useful to launch your app directly,
-// outside of Siftrunner's app harness. Because BaseApps are meant to be run
-// inside Siftrunner, a bootstrapping process is required to kick off the
-// program manually.
-
-
-// All the classes in your app should share a namespace.
+// Bootstrap.cs
+//  
+// ThreeCardMonte - Bootstrap.cs
+// 
+// Copyright (c) 2012 Montclair State University
+// 
+// Contributors:  Christopher Desch <cdesch@gmail.com>
+// 
+// Permission is hereby granted, free of charge, to any person obtaining 
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+// and/or sell copies of the Software, and to permit persons to whom the 
+// 
+// Software is furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in 
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR 
+// ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 namespace ThreeCardMonte
 {
 
-  // The Bootstrap class is a simple wrapper with a Main() method that kicks
-  // off your app. All of your app's logic should go into the app class.
+	// The Bootstrap class is a simple wrapper with a Main() method that kicks
+	// off your app. All of your app's logic should go into the app class.
 	public class Bootstrap
 	{
 
-		public static void Main(string[] args) 
+		public static void Main (string[] args)
 		{
-      // Create the app and start it up.
+			// Create the app and start it up.
 			
-			(new ThreeCardMonte()).Run();
+			(new ThreeCardMonte ()).Run ();
 		}
 	}
 }
