@@ -4,6 +4,7 @@
 /// Copyright (c) 2012 Desch Enterprises. All rights reserved.
 /// </summary>
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Sifteo;
 using Sifteo.Util;
@@ -22,7 +23,7 @@ namespace ThreeCardMonte
 		private int lastIndex;
 		public Cube selectedCube = null;
 		public StateMachine sm;
-		
+		public String[] mImageNames;
 		
 		//State MachineControllers
 		private TitleController titleController;
@@ -61,6 +62,9 @@ namespace ThreeCardMonte
 		{
 			Log.Debug ("Setup()");
 			mNeedCheck = true;
+			
+			// Load up the list of images.
+			mImageNames = LoadImageIndex ();
 			
 			System.Version myVersion = System.Reflection.Assembly.GetExecutingAssembly ().GetName ().Version;		
 			Log.Debug (myVersion.ToString ());
@@ -435,6 +439,26 @@ namespace ThreeCardMonte
 			}
 		}
 		
+		private String[] LoadImageIndex ()
+		{
+			
+			Log.Debug ("Load Images");
+			ImageSet imageSet = this.Images;
+			ArrayList nameList = new ArrayList ();
+			foreach (ImageInfo image in imageSet) {
+			
+				string imageName = "" + image.name.ToString () + " " + image.height.ToString () + " " + image.width.ToString ();
+				Log.Debug (imageName);
+				nameList.Add (image.name);
+				
+			}
+			String[] rv = new String[nameList.Count];
+			for (int i=0; i<nameList.Count; i++) {
+				rv [i] = (string)nameList [i];
+			}
+			return rv;
+		}
+		
 	}
 	
 	// ## CubeWrapper ##
@@ -622,6 +646,9 @@ namespace ThreeCardMonte
 					int x = startX + i * 8;
 					mCube.FillRect (Color.Black, x, 82, 4, 12);
 				}
+				mCube.FillScreen (Color.Black);
+				//mCube.Image ("Spade_96x96-32", 0, 0, 0, 0, 128, 128, 1, 0);
+				mCube.Image ("buddy", 40, 24, 0, 48, 32, 48, 1, 0);
 
 				mCube.Paint ();
 			

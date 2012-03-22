@@ -155,7 +155,10 @@ namespace ThreeCardMonte
 						
 						//Paint the cube
 						if (cube != null) {
-							cube.FillScreen (cubeBackground);
+							//cube.FillScreen (cubeBackground);
+							cube.FillScreen (Color.Black);
+							//cube.Image ("Spade_96x96-32", 0, 0, 0, 0, 96, 96, 1, 0);
+							cube.Image ("buddy", 40, 24, 0, 48, 32, 48, 1, 0);
 							cube.Paint ();
 							//DrawString (cube, 10, 64, "Menu");
 							

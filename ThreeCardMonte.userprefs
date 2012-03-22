@@ -1,13 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ThreeCardMonte/Constants.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ThreeCardMonte/ThreeCardMonte.cs">
     <Files>
-      <File FileName="ThreeCardMonte/ThreeCardMonte.cs" Line="217" Column="36" />
-      <File FileName="ThreeCardMonte/MenuController.cs" Line="20" Column="3" />
+      <File FileName="ThreeCardMonte/ThreeCardMonte.cs" Line="360" Column="5" />
+      <File FileName="ThreeCardMonte/MenuController.cs" Line="190" Column="5" />
       <File FileName="ThreeCardMonte/GameBeginController.cs" Line="21" Column="3" />
       <File FileName="ThreeCardMonte/GameShuffleController.cs" Line="30" Column="20" />
       <File FileName="ThreeCardMonte/GameEndController.cs" Line="7" Column="1" />
-      <File FileName="ThreeCardMonte/Constants.cs" Line="12" Column="19" />
+      <File FileName="ThreeCardMonte/Constants.cs" Line="15" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

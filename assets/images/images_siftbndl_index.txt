@@ -1,2 +1,16 @@
+AceofClubs_96x96-32
+AceofDiamonds_96x96-32
+AceofHearts_96x96-32
+AceofSpades_96x96-32
+Bar_96x96-32
+ben_avatar
 buddy
+Club_96x96-32
+Coins_96x96-32
+Diamonds_96x96-32
+dukenukem
+Hearts_96x96-32
+Money_96x96-32
+Spade_96x96-32
+suits
 xterm610
