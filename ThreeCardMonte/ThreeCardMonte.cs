@@ -115,7 +115,6 @@ namespace ThreeCardMonte
 			sm.Transition ("GameShuffle", tGameShuffleToGameEnd, "GameEnd");
 			sm.Transition ("GameEnd", tGameEndToMenu, "Menu");
 			
-			//sm.SetState ("Title", "TitleToMenu");
 			sm.SetState ("Menu", "MenuToGameBegin");
 			
 			// Loop through all the cubes and set them up.

@@ -32,7 +32,8 @@ Global
 		$4.inheritsScope = text/plain
 		$4.scope = text/plain
 		$0.ChangeLogPolicy = $5
-		$5.UpdateMode = None
+		$5.UpdateMode = ProjectRoot
+		$5.VcsIntegration = RequireEntry
 		$5.MessageStyle = $6
 		$6.LineAlign = 0
 		$5.inheritsSet = Mono
